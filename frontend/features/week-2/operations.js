@@ -13,7 +13,7 @@ async function submitOperation(inspectResult, timeout) {
     if (currentOperation === operation) inspectResult(label, result);
   };
   const controller = new AbortController();
-  // The first request stops waiting before the server's delayed response arrives.
+  // The first request stops waiting before the server finishes and responds.
   const timer = timeout ? setTimeout(() => controller.abort(), 500) : null;
   let response;
 
@@ -44,6 +44,7 @@ async function submitOperation(inspectResult, timeout) {
       error: String(error),
     });
   } finally {
+    // A settled request must not leave an abort timer running.
     if (timer) clearTimeout(timer);
   }
 }

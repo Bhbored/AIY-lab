@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
-    <main class="page">
+    <main class="page lab-page">
       <h1>HTTP and async learning lab</h1>
-      <p>Open DevTools Network, then run one example at a time. The result panel explains what the browser observed.</p>
+      <p>Run one example at a time. Watch DevTools Network, the Latest result panel, and the server terminal.</p>
       <section>
-        <h2>HTTP and response bodies</h2>
+        <h2>Week 1: HTTP basics</h2>
         <div class="buttons">
           <button type="button" id="load-users">Load users (200)</button>
           <button type="button" id="wrong-url">Wrong URL (404)</button>
@@ -23,7 +23,7 @@
         <p>The wrong URL has no matching Express route. The closed-port request goes to <code>127.0.0.1:59999</code>, where this lab has no server.</p>
       </section>
       <section>
-        <h2>Login and cookie</h2>
+        <h2>Week 1: cookies and sessions</h2>
         <p>Try <code>lab-user</code> with a wrong password for HTTP 401. Use <code>lab-pass</code> for success.</p>
         <form id="login-form">
           <div class="fields">
@@ -40,23 +40,24 @@
         <p id="cookie-message" aria-live="polite">After a successful login, inspect Set-Cookie in Network.</p>
       </section>
       <section>
-        <h2>Blocking and non-blocking</h2>
+        <h2>Week 1: blocking versus non-blocking</h2>
         <p>Each button starts its slow request and then a ping without waiting. Compare their timings in Network.</p>
         <div class="buttons">
           <button type="button" id="block-ping">Block + ping</button>
           <button type="button" id="delay-ping">Delay + ping</button>
         </div>
       </section>
-      <section aria-labelledby="week2-heading">
-        <h2 id="week2-heading">Week 2: cancellation and safe retries</h2>
-        <h3>Stop waiting for a request</h3>
+      <section>
+        <h2>Week 2: cancellation and timeout</h2>
         <p>Start the two-second delay, then cancel it yourself. The timeout example stops waiting after 400 ms. Neither action proves the server stopped.</p>
         <div class="buttons">
           <button type="button" id="start-delay">Start delayed request</button>
           <button type="button" id="cancel-delay" disabled>Cancel request</button>
           <button type="button" id="client-timeout">Try client timeout</button>
         </div>
-        <h3>Operation with an uncertain outcome</h3>
+      </section>
+      <section>
+        <h2>Week 2: unknown outcomes and safe retries</h2>
         <p>Start creates a notebook operation. The client stops waiting after 500 ms, but the server can finish it. Check the status before retrying.</p>
         <p>Operation ID: <code id="operation-id">None</code><br />Idempotency key: <code id="idempotency-key">None</code><br />Previous operation ID after unsafe retry: <code id="previous-operation-id">None</code></p>
         <div class="buttons">
@@ -66,6 +67,11 @@
           <button type="button" id="retry-new-key">Unsafe: create another operation with a new key</button>
         </div>
         <p>Each HTTP request has a new correlation ID for tracing. A retry uses the same idempotency key to identify the same logical operation.</p>
+      </section>
+      <section>
+        <h2>Network inspection: working versus failing</h2>
+        <p>Send valid and invalid demo logins to the same endpoint. Compare method, URL, headers, bodies, status, and timing in Charles or mitmproxy. Redact credential and cookie values before sharing captures.</p>
+        <button type="button" id="compare-login">Send login pair</button>
       </section>
       <section class="result" aria-live="polite">
         <h2>Latest result</h2>

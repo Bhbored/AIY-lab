@@ -14,7 +14,7 @@ npm.cmd install
 npm.cmd start
 ```
 
-Open `http://localhost:3001`. Use `npm.cmd run dev` instead of `start` to restart the server when backend files change. Run `npm.cmd test` for Node's built-in test suite, or `npm.cmd run async-order` for the event-loop example. There is no build command.
+Open `http://localhost:3000`. Use `npm.cmd run dev` instead of `start` to restart the server when backend files change. Run `npm.cmd test` for Node's built-in test suite, or `npm.cmd run async-order` for the event-loop example. There is no build command.
 
 ## Coding Style & Naming Conventions
 

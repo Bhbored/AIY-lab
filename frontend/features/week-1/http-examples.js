@@ -102,6 +102,7 @@ export async function showInvalidJson(inspectResult) {
   let response;
   try {
     response = await fetch("/api/invalid-json");
+    // Fetch can succeed with HTTP 200 while JSON parsing still throws.
     const body = await response.json();
     inspectResult("Invalid JSON", {
       status: response.status,

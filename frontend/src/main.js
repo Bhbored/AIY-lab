@@ -7,7 +7,10 @@ import {
 } from "../features/week-1/http-examples.js";
 import { login, readSession } from "../features/week-1/session.js";
 import { showBlocked, showDelay } from "../features/week-1/timing.js";
-import { startDelayedRequest, cancelDelayedRequest } from "../features/week-2/cancellation.js";
+import {
+  startDelayedRequest,
+  cancelDelayedRequest,
+} from "../features/week-2/cancellation.js";
 import { tryClientTimeout } from "../features/week-2/timeout.js";
 import {
   startOperation,
@@ -15,6 +18,7 @@ import {
   retrySameKey,
   retryNewKey,
 } from "../features/week-2/operations.js";
+import { runLoginPair } from "../features/week-2/request-comparison.js";
 
 function inspectResult(label, result) {
   document.getElementById("last-result").textContent =
@@ -46,13 +50,21 @@ document.getElementById("read-session").onclick = () =>
 document.getElementById("block-ping").onclick = () =>
   showBlocked(inspectResult);
 document.getElementById("delay-ping").onclick = () => showDelay(inspectResult);
-document.getElementById("start-delay").onclick = () => startDelayedRequest(inspectResult);
+document.getElementById("start-delay").onclick = () =>
+  startDelayedRequest(inspectResult);
 document.getElementById("cancel-delay").onclick = cancelDelayedRequest;
-document.getElementById("client-timeout").onclick = () => tryClientTimeout(inspectResult);
-document.getElementById("start-operation").onclick = () => startOperation(inspectResult);
-document.getElementById("check-operation").onclick = () => checkOperation(inspectResult);
-document.getElementById("retry-same-key").onclick = () => retrySameKey(inspectResult);
-document.getElementById("retry-new-key").onclick = () => retryNewKey(inspectResult);
+document.getElementById("client-timeout").onclick = () =>
+  tryClientTimeout(inspectResult);
+document.getElementById("start-operation").onclick = () =>
+  startOperation(inspectResult);
+document.getElementById("check-operation").onclick = () =>
+  checkOperation(inspectResult);
+document.getElementById("retry-same-key").onclick = () =>
+  retrySameKey(inspectResult);
+document.getElementById("retry-new-key").onclick = () =>
+  retryNewKey(inspectResult);
+document.getElementById("compare-login").onclick = () =>
+  runLoginPair(inspectResult);
 
 document.getElementById("login-form").onsubmit = (event) => {
   event.preventDefault();

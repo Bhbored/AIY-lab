@@ -3,6 +3,7 @@ let delayedRequest;
 export async function startDelayedRequest(inspectResult) {
   if (delayedRequest) return;
 
+  // AbortController stops this browser request; the server may keep working.
   delayedRequest = new AbortController();
   document.getElementById("cancel-delay").disabled = false;
   inspectResult("Manual cancellation", { state: "waiting for /api/delay" });

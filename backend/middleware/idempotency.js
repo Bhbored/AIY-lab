@@ -18,7 +18,7 @@ export function idempotency(records) {
       return res.set("Idempotency-Replayed", "true").status(existing.status).json(existing.result);
     }
 
-    // Check and register without awaiting: two incoming requests cannot both pass this point.
+    // Reserve before asynchronous work so another request cannot start the same operation.
     const record = { fingerprint, operationId: req.body.operationId, state: "processing" };
     records.set(key, record);
     req.idempotencyRecord = record;
