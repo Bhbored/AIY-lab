@@ -1,0 +1,34 @@
+Command: node --test tests/idempotency.test.js
+Exit code: 1
+State: idempotency middleware temporarily removed from POST /api/operations
+
+? the same key cannot create a second operation with a changed ID (125.5131ms)
+? tests 1
+? suites 0
+? pass 0
+? fail 1
+? cancelled 0
+? skipped 0
+? todo 0
+? duration_ms 303.784
+
+? failing tests:
+
+test at tests\idempotency.test.js:6:1
+? the same key cannot create a second operation with a changed ID (125.5131ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///C:/Users/bhbored/Desktop/AIY/bootcamp/week-2/week-1-http-lab/backend/tests/idempotency.test.js:19:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
