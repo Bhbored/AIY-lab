@@ -5,7 +5,9 @@ const sessionValue = "learning-lab-session";
 const cookieOptions = { httpOnly: true, sameSite: "lax", path: "/" };
 router.post("/login", (req, res) => {
   if (!req.is("application/json")) {
-    return res.status(415).json({ ok: false, message: "Content-Type must be application/json" });
+    return res
+      .status(415)
+      .json({ ok: false, message: "Content-Type must be application/json" });
   }
 
   const valid =

@@ -18,7 +18,7 @@ import {
   retrySameKey,
   retryNewKey,
 } from "../features/week-2/operations.js";
-import { runLoginPair } from "../features/week-2/request-comparison.js";
+import { runComparison } from "../features/week-2/request-comparison.js";
 
 function inspectResult(label, result) {
   document.getElementById("last-result").textContent =
@@ -63,8 +63,8 @@ document.getElementById("retry-same-key").onclick = () =>
   retrySameKey(inspectResult);
 document.getElementById("retry-new-key").onclick = () =>
   retryNewKey(inspectResult);
-document.getElementById("compare-login").onclick = () =>
-  runLoginPair(inspectResult);
+document.getElementById("compare-run").onclick = () =>
+  runComparison(document.getElementById("comparison-failure").value);
 
 document.getElementById("login-form").onsubmit = (event) => {
   event.preventDefault();

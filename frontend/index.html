@@ -1,83 +1,159 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTTP and async learning lab</title>
-    <link rel="stylesheet" href="/src/styles.css" />
-  </head>
-  <body>
-    <main class="page lab-page">
-      <h1>HTTP and async learning lab</h1>
-      <p>Run one example at a time. Watch DevTools Network, the Latest result panel, and the server terminal.</p>
-      <section>
-        <h2>Week 1: HTTP basics</h2>
-        <div class="buttons">
-          <button type="button" id="load-users">Load users (200)</button>
-          <button type="button" id="wrong-url">Wrong URL (404)</button>
-          <button type="button" id="closed-port">Closed port (no response)</button>
-          <button type="button" id="application-failure">200 application failure</button>
-          <button type="button" id="invalid-json">200 invalid JSON</button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTTP and async learning lab</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+
+<body>
+  <main class="page lab-page">
+    <h1>HTTP and async learning lab</h1>
+    <p>Run one example at a time. Most buttons update Latest result; Network inspection uses its own table. Watch
+      request details in DevTools or the linked server logs.</p>
+    <p><a href="/logs/" target="_blank" rel="noopener">View recent server logs</a></p>
+    <section>
+      <h2>Week 1: HTTP basics</h2>
+      <div class="buttons">
+        <button type="button" id="load-users">Load users (200)</button>
+        <button type="button" id="wrong-url">Wrong URL (404)</button>
+        <button type="button" id="closed-port">Closed port (no response)</button>
+        <button type="button" id="application-failure">200 application failure</button>
+        <button type="button" id="invalid-json">200 invalid JSON</button>
+      </div>
+      <ul id="users" aria-label="Loaded users"></ul>
+      <p>The wrong URL has no matching Express route. The closed-port request goes to <code>127.0.0.1:59999</code>,
+        where this lab has no server.</p>
+    </section>
+    <section>
+      <h2>Week 1: cookies and sessions</h2>
+      <p>Try <code>lab-user</code> with a wrong password for HTTP 401. Use <code>lab-pass</code> for success.</p>
+      <form id="login-form">
+        <div class="fields">
+          <label for="username-input">Username</label>
+          <input id="username-input" name="username" value="lab-user" autocomplete="username" />
+          <label for="password-input">Password</label>
+          <input id="password-input" name="password" type="password" value="wrong-pass"
+            autocomplete="current-password" />
         </div>
-        <ul id="users" aria-label="Loaded users"></ul>
-        <p>The wrong URL has no matching Express route. The closed-port request goes to <code>127.0.0.1:59999</code>, where this lab has no server.</p>
-      </section>
-      <section>
-        <h2>Week 1: cookies and sessions</h2>
-        <p>Try <code>lab-user</code> with a wrong password for HTTP 401. Use <code>lab-pass</code> for success.</p>
-        <form id="login-form">
-          <div class="fields">
-            <label for="username-input">Username</label>
-            <input id="username-input" name="username" value="lab-user" autocomplete="username" />
-            <label for="password-input">Password</label>
-            <input id="password-input" name="password" type="password" value="wrong-pass" autocomplete="current-password" />
-          </div>
-          <div class="buttons">
-            <button type="submit">Send login</button>
-            <button type="button" id="read-session">Read session</button>
-          </div>
-        </form>
-        <p id="cookie-message" aria-live="polite">After a successful login, inspect Set-Cookie in Network.</p>
-      </section>
-      <section>
-        <h2>Week 1: blocking versus non-blocking</h2>
-        <p>Each button starts its slow request and then a ping without waiting. Compare their timings in Network.</p>
         <div class="buttons">
-          <button type="button" id="block-ping">Block + ping</button>
-          <button type="button" id="delay-ping">Delay + ping</button>
+          <button type="submit">Send login</button>
+          <button type="button" id="read-session">Read session</button>
         </div>
-      </section>
-      <section>
-        <h2>Week 2: cancellation and timeout</h2>
-        <p>Start the two-second delay, then cancel it yourself. The timeout example stops waiting after 400 ms. Neither action proves the server stopped.</p>
-        <div class="buttons">
-          <button type="button" id="start-delay">Start delayed request</button>
-          <button type="button" id="cancel-delay" disabled>Cancel request</button>
-          <button type="button" id="client-timeout">Try client timeout</button>
-        </div>
-      </section>
-      <section>
-        <h2>Week 2: unknown outcomes and safe retries</h2>
-        <p>Start creates a notebook operation. The client stops waiting after 500 ms, but the server can finish it. Check the status before retrying.</p>
-        <p>Operation ID: <code id="operation-id">None</code><br />Idempotency key: <code id="idempotency-key">None</code><br />Previous operation ID after unsafe retry: <code id="previous-operation-id">None</code></p>
-        <div class="buttons">
-          <button type="button" id="start-operation">Start operation</button>
-          <button type="button" id="check-operation">Check operation status</button>
-          <button type="button" id="retry-same-key">Retry with same key</button>
-          <button type="button" id="retry-new-key">Unsafe: create another operation with a new key</button>
-        </div>
-        <p>Each HTTP request has a new correlation ID for tracing. A retry uses the same idempotency key to identify the same logical operation.</p>
-      </section>
-      <section>
-        <h2>Network inspection: working versus failing</h2>
-        <p>Send valid and invalid demo logins to the same endpoint. Compare method, URL, headers, bodies, status, and timing in Charles or mitmproxy. Redact credential and cookie values before sharing captures.</p>
-        <button type="button" id="compare-login">Send login pair</button>
-      </section>
-      <section class="result" aria-live="polite">
-        <h2>Latest result</h2>
-        <pre id="last-result">No request yet.</pre>
-      </section>
-    </main>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+      </form>
+      <p id="cookie-message" aria-live="polite">After a successful login, inspect Set-Cookie in Network.</p>
+    </section>
+    <section>
+      <h2>Week 1: blocking versus non-blocking</h2>
+      <p>Each button starts its slow request and then a ping without waiting. Compare their timings in Network.</p>
+      <div class="buttons">
+        <button type="button" id="block-ping">Block + ping</button>
+        <button type="button" id="delay-ping">Delay + ping</button>
+      </div>
+    </section>
+    <section>
+      <h2>Week 2: cancellation and timeout</h2>
+      <p>Start the two-second delay, then cancel it yourself. The timeout example stops waiting after 400 ms. Neither
+        action proves the server stopped.</p>
+      <div class="buttons">
+        <button type="button" id="start-delay">Start delayed request</button>
+        <button type="button" id="cancel-delay" disabled>Cancel request</button>
+        <button type="button" id="client-timeout">Try client timeout</button>
+      </div>
+    </section>
+    <section>
+      <h2>Week 2: unknown outcomes and safe retries</h2>
+      <p>Start creates a notebook operation. The client stops waiting after 500 ms, but the server can finish it. Check
+        the status before retrying.</p>
+      <p>Operation ID: <code id="operation-id">None</code><br />Idempotency key: <code
+          id="idempotency-key">None</code><br />Previous operation ID after unsafe retry: <code
+          id="previous-operation-id">None</code></p>
+      <div class="buttons">
+        <button type="button" id="start-operation">Start operation</button>
+        <button type="button" id="check-operation">Check operation status</button>
+        <button type="button" id="retry-same-key">Retry with same key</button>
+        <button type="button" id="retry-new-key">Unsafe: create another operation with a new key</button>
+      </div>
+      <p>Each HTTP request has a new correlation ID for tracing. A retry uses the same idempotency key to identify the
+        same logical operation.</p>
+    </section>
+    <section>
+      <h2>Network inspection: working versus failing</h2>
+      <p>Choose one failure. Each run sends a working login followed by the changed request. The comparison starts blank
+        and updates after both responses arrive.</p>
+      <label for="comparison-failure">Failure to compare</label>
+      <select id="comparison-failure">
+        <option value="password">Wrong password (401)</option>
+        <option value="method">Wrong method (405)</option>
+        <option value="url">Wrong URL (404)</option>
+        <option value="header">Wrong Content-Type (415)</option>
+        <option value="body">Missing password field (401)</option>
+      </select>
+      <button type="button" id="compare-run">Run comparison</button>
+      <p id="comparison-state" role="status" aria-live="polite"></p>
+      <div class="comparison-scroll">
+        <table aria-label="Working and failing request comparison">
+          <thead>
+            <tr>
+              <th scope="col">Detail</th>
+              <th scope="col">Working</th>
+              <th scope="col">Failing</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Method</th>
+              <td id="working-method"></td>
+              <td id="failing-method"></td>
+            </tr>
+            <tr>
+              <th scope="row">URL</th>
+              <td id="working-url"></td>
+              <td id="failing-url"></td>
+            </tr>
+            <tr>
+              <th scope="row">Request headers</th>
+              <td id="working-request-headers"></td>
+              <td id="failing-request-headers"></td>
+            </tr>
+            <tr>
+              <th scope="row">Request body</th>
+              <td id="working-request-body"></td>
+              <td id="failing-request-body"></td>
+            </tr>
+            <tr>
+              <th scope="row">HTTP status</th>
+              <td id="working-status"></td>
+              <td id="failing-status"></td>
+            </tr>
+            <tr>
+              <th scope="row">Response headers</th>
+              <td id="working-response-headers"></td>
+              <td id="failing-response-headers"></td>
+            </tr>
+            <tr>
+              <th scope="row">Response body</th>
+              <td id="working-response-body"></td>
+              <td id="failing-response-body"></td>
+            </tr>
+            <tr>
+              <th scope="row">Browser timing</th>
+              <td id="working-timing"></td>
+              <td id="failing-timing"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The table shows selected headers and redacted request bodies.</p>
+    </section>
+    <section class="result" aria-live="polite">
+      <h2>Latest result</h2>
+      <pre id="last-result">No request yet.</pre>
+    </section>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

@@ -37,9 +37,15 @@ test("invalid JSON fails after HTTP 200", async (t) => {
 
 test("AbortController cancels a pending request", async (t) => {
   let markReceived;
-  const received = new Promise((resolve) => { markReceived = resolve; });
+  const received = new Promise((resolve) => {
+    markReceived = resolve;
+  });
   const base = startServer(t, (entry) => {
-    if (entry.type === "request" && entry.event === "received" && entry.path === "/api/delay") {
+    if (
+      entry.type === "request" &&
+      entry.event === "received" &&
+      entry.path === "/api/delay"
+    ) {
       markReceived();
     }
   });

@@ -1,0 +1,21 @@
+.log-page {
+  max-width: 1200px;
+  padding-bottom: 48px;
+}
+
+.log-table-scroll {
+  overflow-x: auto;
+}
+
+.log-table-scroll table {
+  min-width: 940px;
+}
+
+.log-table-scroll td:nth-child(4),
+.log-table-scroll td:nth-child(7) {
+  overflow-wrap: anywhere;
+}
+
+#empty-logs[hidden] {
+  display: none;
+}

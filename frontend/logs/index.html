@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recent server logs | HTTP lab</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="stylesheet" href="/logs/styles.css" />
+  </head>
+  <body>
+    <main class="page log-page">
+      <p><a href="/">Back to the lab</a></p>
+      <h1>Recent server logs</h1>
+      <p>Run an example on the main page, then refresh here. This list holds up to 30 recent API and operation events from the current server session.</p>
+      <div class="buttons">
+        <button type="button" id="refresh-logs">Refresh logs</button>
+        <button type="button" id="clear-logs" disabled>Clear recent logs</button>
+      </div>
+      <p id="log-state" role="status" aria-live="polite"></p>
+      <section>
+        <h2>Requests and operations</h2>
+        <p id="empty-logs" hidden>No API or operation events yet. Run an example on the main page.</p>
+        <div class="log-table-scroll">
+          <table aria-label="Recent server events">
+            <thead>
+              <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Type</th>
+                <th scope="col">Event</th>
+                <th scope="col">Path or operation ID</th>
+                <th scope="col">HTTP status</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Correlation ID</th>
+                <th scope="col">Idempotency key hash</th>
+              </tr>
+            </thead>
+            <tbody id="log-rows"></tbody>
+          </table>
+        </div>
+      </section>
+      <p>Each request normally adds a received row and a finished row. The idempotency key hash appears only when a request sends an Idempotency-Key, such as Start operation and Retry with same key. Matching hashes identify the same key without displaying it. A dash means the field does not apply. Clear recent logs empties this page's in-memory history, not terminal output.</p>
+    </main>
+    <script type="module" src="/logs/logs.js"></script>
+  </body>
+</html>

@@ -1,9 +1,12 @@
 let currentOperation;
 
 function showIdentity() {
-  document.getElementById("operation-id").textContent = currentOperation?.operationId ?? "None";
-  document.getElementById("idempotency-key").textContent = currentOperation?.key ?? "None";
-  document.getElementById("previous-operation-id").textContent = currentOperation?.previousOperationId ?? "None";
+  document.getElementById("operation-id").textContent =
+    currentOperation?.operationId ?? "None";
+  document.getElementById("idempotency-key").textContent =
+    currentOperation?.key ?? "None";
+  document.getElementById("previous-operation-id").textContent =
+    currentOperation?.previousOperationId ?? "None";
 }
 
 async function submitOperation(inspectResult, timeout) {
@@ -44,7 +47,6 @@ async function submitOperation(inspectResult, timeout) {
       error: String(error),
     });
   } finally {
-    // A settled request must not leave an abort timer running.
     if (timer) clearTimeout(timer);
   }
 }
@@ -56,7 +58,9 @@ export function startOperation(inspectResult) {
     productId: "notebook",
   };
   showIdentity();
-  inspectResult("Operation request", { state: "waiting; client timeout is 500 ms" });
+  inspectResult("Operation request", {
+    state: "waiting; client timeout is 500 ms",
+  });
   return submitOperation(inspectResult, true);
 }
 
